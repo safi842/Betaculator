@@ -60,7 +60,7 @@ with st.expander('How to Use'):
     st.write("This app lets you calculate the **Beta** of any company you're interested in. All you have to do is enter the company ticker and the application will either automatically search for the relevant Market Index or ask you to enter the corresponding ticker. You can then select a time interval and period for analysis, yielding both adjusted and raw beta values")
 
 st.header('General company information')
-stock_ticker_input = st.text_input('Please enter the company ticker here:')
+stock_ticker_input = st.text_input('Please enter the company ticker here:').upper()
 #status_radio = st.radio('Please click Search when you are ready.', ('Entry', 'Search'))
 
 def search_company():
@@ -75,7 +75,7 @@ def search_company():
         st.error("Can't find the company ticker. Please try again.")
     if currency not in ["USD","INR","N/A"]:
         st.error("Please enter the corresponding Market Index.")
-        m_ticker = st.text_input("Please enter your market index ticker here.")
+        m_ticker = st.text_input("Please enter your market index ticker here.").upper()
         try:
             m = yf.Ticker(m_ticker)
             m_currency = m.fast_info['currency']
