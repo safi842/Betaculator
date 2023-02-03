@@ -26,6 +26,7 @@ class EstimateBeta:
         df = yf.download([self.stock,self.market],start=self.start,end=self.end,interval=self.interval)
         df = df["Adj Close"][[self.stock,self.market]].pct_change()[1:] * 100
         df.rename(columns = {self.stock:self.stock+" returns %",self.market:self.market+" returns %"}, inplace = True)
+        df = df.dropna()
         return df
     
     def calculate_beta(self, plot=True):
