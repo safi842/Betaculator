@@ -101,8 +101,8 @@ if market_ticker != None and k == 0:
     status_radio = st.radio('Mode of entering the time period', ('Number of years', 'Start and End Dates of a period'))
     if status_radio == "Start and End Dates of a period":
         years = 0
-        start_date = st.date_input("Start Date", date.today())
-        end_date = st.date_input("End Date", date.today()-relativedelta(weeks = 105))
+        end_date = st.date_input("Start Date", date.today())
+        start_date = st.date_input("End Date", date.today()-relativedelta(weeks = 105))
     else:
         start_date = None
         end_date = None
@@ -111,8 +111,11 @@ if market_ticker != None and k == 0:
     interval_dict = {"Daily":"1d","Weekly":"1wk","Monthly":"1mo"}
     interval = interval_dict[interval]
     
-    e = EstimateBeta(stock_ticker_input, market_ticker, start_date, end_date, years, interval)
-    e.calculate_beta()
+    try:
+        e = EstimateBeta(stock_ticker_input, market_ticker, start_date, end_date, years, interval)
+        e.calculate_beta()
+    except:
+        st.error("Start Date cannot be after the End Date")
     
     
 st.markdown("<div style='text-align: center;'>Acknowledgement: Data was sourced using Yahoo Finance's API</div>",unsafe_allow_html=True)
