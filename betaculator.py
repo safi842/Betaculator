@@ -101,8 +101,9 @@ if market_ticker != None and k == 0:
     status_radio = st.radio('Mode of entering the time period', ('Number of years', 'Start and End Dates of a period'))
     if status_radio == "Start and End Dates of a period":
         years = 0
-        end_date = st.date_input("Start Date", date.today())
-        start_date = st.date_input("End Date", date.today()-relativedelta(weeks = 105))
+        start_date = st.date_input("Start Date", date.today()-relativedelta(weeks = 105))
+        end_date = st.date_input("End Date", date.today())
+        
     else:
         start_date = None
         end_date = None
