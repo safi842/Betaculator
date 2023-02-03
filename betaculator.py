@@ -115,7 +115,7 @@ if market_ticker != None and k == 0:
     try:
         e = EstimateBeta(stock_ticker_input, market_ticker, start_date, end_date, years, interval)
         e.calculate_beta()
-    except:
+    except ValueError:
         st.error("Start Date cannot be after the End Date")
     
     
