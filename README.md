@@ -10,4 +10,4 @@ Betaculator is a simple, easy-to-use application that allows you to calculate th
 
 ## Acknowledgements
 - Yahoo Finance API | [yfinance](https://github.com/ranaroussi/yfinance)
-- Streamlit | [App Framework](https://streamlit.io)
+- Streamlit : [App Framework](https://streamlit.io)
