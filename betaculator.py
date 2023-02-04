@@ -76,7 +76,7 @@ def search_company():
             st.error("Can't find the company ticker. Please try again.")
     if currency not in ["USD","INR","N/A"]:
         st.error("Please enter the corresponding Market Index.")
-        m_ticker = st.text_input('Please enter the market index ticker here.         Eg: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
+        m_ticker = st.text_input('Please enter the market index ticker here. Eg:: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
         try:
             m = yf.Ticker(m_ticker)
             m_currency = m.fast_info['currency']
@@ -121,5 +121,5 @@ if market_ticker != None and k == 0:
         st.error("Start Date cannot be after the End Date")
     
     
-st.markdown("<div style='text-align: center;'>Acknowledgement: Data was sourced using Yahoo Finance's API</div>",unsafe_allow_html=True)
+st.markdown("<div style='text-align: center;'>Data Source : Yahoo Finance®</div>",unsafe_allow_html=True)
 st.markdown('<div style="text-align: center;">Copyright (c)     2023 Mohammad Safiuddin</div>', unsafe_allow_html=True)
