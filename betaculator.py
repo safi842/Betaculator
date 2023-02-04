@@ -72,7 +72,8 @@ def search_company():
         st.write("Company Name : " + s.info["longName"])
     except KeyError:
         currency = "N/A"
-        st.error("Can't find the company ticker. Please try again.")
+        if stock_ticker_input != "":
+            st.error("Can't find the company ticker. Please try again.")
     if currency not in ["USD","INR","N/A"]:
         st.error("Please enter the corresponding Market Index.")
         m_ticker = st.text_input("Please enter your market index ticker here.").upper()
@@ -82,7 +83,8 @@ def search_company():
             st.write("Market Index : " + m.info["longName"])
         except KeyError:
             m_currency = "N/A"
-            st.error("Can't find the company ticker. Please try again.")
+            if m_ticker != "":
+                st.error("Can't find the company ticker. Please try again.")
             k = 1
     elif currency == "INR":
         m_ticker = "^NSEI"
