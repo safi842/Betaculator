@@ -55,7 +55,7 @@ class EstimateBeta:
                 x = X.reshape(1,-1)[0],
                 y = exp_return,
                 mode = "lines",
-                name = f"R_{self.stock} : {self.intercept:.3f} + {self.raw_beta:.3f}R_{self.market[1:]}")
+                name = f"R_{self.stock} : {self.intercept:.3f} + {self.raw_beta:.3f} × R_{self.market[1:]}")
 
             data = [trace0,trace1]
             fig = go.Figure(data)
