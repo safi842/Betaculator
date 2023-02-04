@@ -63,7 +63,7 @@ class EstimateBeta:
                   xaxis_title = self.market+" returns %", yaxis_title = self.stock+" returns %", 
                   template = "plotly_dark")
             fig.update_layout(legend=dict(yanchor="top", y=1.15, xanchor="left", x=0.35))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True,height=800)
         return self.adj_beta
         
 st.title('Betaculator')
