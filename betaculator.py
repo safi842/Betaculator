@@ -49,7 +49,7 @@ class EstimateBeta:
                 x = X.reshape(1,-1)[0], 
                 y = y, 
                 mode = "markers",
-                name = "Real Returns")
+                name = "Actual Returns")
 
             trace1 = go.Scatter(
                 x = X.reshape(1,-1)[0],
