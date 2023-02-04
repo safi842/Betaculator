@@ -41,17 +41,26 @@ class EstimateBeta:
         df = pd.DataFrame({"Adjusted Beta": [self.adj_beta],"Raw Beta":[self.raw_beta],"R-squared":[self.r2_score]})
         st.table(df)
         if plot:
-            exp_return = self.raw_beta*X + self.intercept
-            plt.scatter(X, y, color = "red")
-            plt.plot(X, exp_return , color = "green")
-            plt.show()
-            fig, ax = plt.subplots(figsize = (9, 9))
-            ax.scatter(X, y, s=60, alpha=0.7, edgecolors="k")
-            ax.plot(X, exp_return, color="k", lw=2.5)
-            fig.suptitle("Security Market Line")
-            ax.set_xlabel(self.market+" returns %")
-            ax.set_ylabel(self.stock+" returns %")
-            st.pyplot(fig)
+            exp_return = self.raw_beta*X.reshape(1,-1)[0] + self.intercept
+            trace0 = go.Scatter(
+                x = X.reshape(1,-1)[0], 
+                y = y, 
+                mode = "markers",
+                name = "Real Returns")
+
+            trace1 = go.Scatter(
+                x = X.reshape(1,-1)[0],
+                y = exp_return,
+                mode = "lines",
+                name = f"R_{self.stock} : {self.intercept:.3f} + {self.raw_beta:.3f}R_{self.market[1:]}")
+
+            data = [trace0,trace1]
+            fig = go.Figure(data)
+            fig.update_layout(title = self.stock+" : Beta estimation", 
+                  xaxis_title = self.market+" returns %", yaxis_title = self.stock+" returns %", 
+                  template = "plotly_dark")
+            fig.update_layout(legend=dict(yanchor="top", y=1.15, xanchor="left", x=0.35))
+            st.plotly_chart(fig, use_container_width=True)
         return self.adj_beta
         
 st.title('Betaculator')
