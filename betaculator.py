@@ -76,7 +76,7 @@ def search_company():
             st.error("Can't find the company ticker. Please try again.")
     if currency not in ["USD","INR","N/A"]:
         st.error("Please enter the corresponding Market Index.")
-        m_ticker = st.text_input('Please enter the market index ticker here. \\ Eg: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
+        m_ticker = st.text_input('Please enter the market index ticker here.         Eg: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
         try:
             m = yf.Ticker(m_ticker)
             m_currency = m.fast_info['currency']
