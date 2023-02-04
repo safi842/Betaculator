@@ -5,6 +5,9 @@ import yfinance as yf
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from matplotlib import pyplot as plt
+import plotly.io as pio
+import plotly.graph_objs as go
+from plotly import subplots
 from sklearn.linear_model import LinearRegression
 
 class EstimateBeta:
