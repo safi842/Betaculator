@@ -60,7 +60,7 @@ class EstimateBeta:
             data = [trace0,trace1]
             fig = go.Figure(data)
             fig.update_layout(title = self.stock+" : Beta estimation", 
-                  xaxis_title = "X :"+ self.market+" returns %", yaxis_title = "Y :"+ self.stock+" returns %", 
+                  xaxis_title = "X: "+ self.market+" returns %", yaxis_title = "Y: "+ self.stock+" returns %", 
                   template = "plotly_dark")
             fig.update_layout(legend=dict(yanchor="top", y=1.2, xanchor="left", x=0.35))
             st.plotly_chart(fig, use_container_width=True,height=800)
