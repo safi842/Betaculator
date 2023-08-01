@@ -5,4 +5,4 @@ plotly==5.9.0
 python_dateutil==2.8.2
 scikit_learn==1.2.1
 streamlit==1.17.0
-yfinance==0.2.9
+yfinance==0.2.26
