@@ -11,22 +11,27 @@ from plotly import subplots
 from sklearn.linear_model import LinearRegression
 
 class EstimateBeta:
-    def __init__(self,stock,market, start=None,end=None,years=2,interval="1wk"):
+    def __init__(self,stock,market=None,start=None,end=None,years=2,interval="1wk"):
         self.stock = stock
-        self.market = market
         self.years = years
         self.weeks = (52*self.years)+1
         self.interval = interval
         self.end = date.today() if end == None else end
         self.start = str(self.end - relativedelta(weeks=self.weeks)) if start == None else start
         self.stock_ticker = yf.Ticker(stock)
-        self.name = self.stock_ticker.info["longName"]
-        na = self.stock_ticker.history(period="1d")
-        self.currency = self.stock_ticker.get_history_metadata()["currency"]
-        
+        #self.name = self.stock_ticker.info["longName"]
+        #na = self.stock_ticker.history(period="1d")
+        #self.currency = self.stock_ticker.get_history_metadata()["currency"]
+        #if self.currency == "INR":
+        #    self.market = "^NSEI"
+        #elif self.currency == "USD":
+        #    self.market = "^GSPC"
+        #else:
+        self.market = market
             
     def compute_returns(self):
         df = yf.download([self.stock,self.market],start=self.start,end=self.end,interval=self.interval)
+        self.df = df
         df = df["Adj Close"][[self.stock,self.market]].pct_change()[1:] * 100
         df.rename(columns = {self.stock:self.stock+" returns %",self.market:self.market+" returns %"}, inplace = True)
         df = df.dropna()
@@ -41,31 +46,30 @@ class EstimateBeta:
         self.intercept = reg.intercept_
         self.r2_score = reg.score(X,y)
         self.adj_beta = (2/3)*self.raw_beta + (1/3) #Bloomberg estimate
-        df = pd.DataFrame({"Adjusted Beta": [self.adj_beta],"Raw Beta":[self.raw_beta],"R-squared":[self.r2_score]})
-        st.table(df)
         if plot:
             exp_return = self.raw_beta*X.reshape(1,-1)[0] + self.intercept
             trace0 = go.Scatter(
                 x = X.reshape(1,-1)[0], 
-                y = y, 
+                y = y,
                 mode = "markers",
-                name = "Actual Returns")
+                name = "Real Returns")
 
             trace1 = go.Scatter(
                 x = X.reshape(1,-1)[0],
                 y = exp_return,
                 mode = "lines",
-                name = f"TrendLine : {self.intercept:.3f} + {self.raw_beta:.3f} × R_{self.market[1:]}")
+                name = f"R_{self.stock} : {self.intercept:.3f} + {self.raw_beta:.3f}R_{self.market[1:]}")
 
             data = [trace0,trace1]
             fig = go.Figure(data)
             fig.update_layout(title = self.stock+" : Beta estimation", 
-                  xaxis_title = "X: "+ self.market+" returns %", yaxis_title = "Y: "+ self.stock+" returns %", 
+                  xaxis_title = self.market+" returns %", yaxis_title = self.stock+" returns %", 
                   template = "plotly_dark")
-            fig.update_layout(legend=dict(yanchor="top", y=1.2, xanchor="left", x=0.35))
-            st.plotly_chart(fig, use_container_width=True,height=800)
+            fig.update_layout(legend=dict(yanchor="top", y=1.15, xanchor="left", x=0.35))
+            fig.show()
+            
         return self.adj_beta
-        
+
 st.title('Betaculator')
 
 with st.expander('How to Use'):
