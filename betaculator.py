@@ -73,44 +73,10 @@ with st.expander('How to Use'):
 
 st.header('General company information')
 stock_ticker_input = st.text_input('Please enter the company ticker here:').upper()
+market_ticker = st.text_input('Please enter the market index ticker here. Eg:: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
 #status_radio = st.radio('Please click Search when you are ready.', ('Entry', 'Search'))
 
-def search_company():
-    m_ticker = None
-    k = 0
-    try:
-        s = yf.Ticker(stock_ticker_input)
-        currency = s.fast_info['currency']
-        st.write("Company Name : " + s.info["longName"])
-    except KeyError:
-        currency = "N/A"
-        if stock_ticker_input != "":
-            st.error("Can't find the company ticker. Please try again.")
-    if currency not in ["USD","INR","N/A"]:
-        st.error("Please enter the corresponding Market Index.")
-        m_ticker = st.text_input('Please enter the market index ticker here. Eg:: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
-        try:
-            m = yf.Ticker(m_ticker)
-            m_currency = m.fast_info['currency']
-            st.write("Market Index : " + m.info["longName"])
-        except KeyError:
-            m_currency = "N/A"
-            if m_ticker != "":
-                st.error("Can't find the company ticker. Please try again.")
-            k = 1
-    elif currency == "INR":
-        m_ticker = "^NSEI"
-        m = yf.Ticker(m_ticker)
-        st.write("Market Index : " + m.info["longName"])
-    elif currency == "USD":
-        m_ticker = "^GSPC"
-        m = yf.Ticker(m_ticker)
-        st.write("Market Index : " + m.info["longName"])
-    return m_ticker, k
-    
-   
-market_ticker, k = search_company()
-if market_ticker != None and k == 0:
+if stock_ticker != None and market_ticker != None:
     st.header('Beta Estimation')
     status_radio = st.radio('Mode of entering the time period', ('Number of years', 'Start and End Dates of a period'))
     if status_radio == "Start and End Dates of a period":
