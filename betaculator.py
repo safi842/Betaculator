@@ -76,7 +76,7 @@ stock_ticker_input = st.text_input('Please enter the company ticker here:').uppe
 market_ticker = st.text_input('Please enter the market index ticker here. Eg:: S&P 500 : "^GSPC" ; NIFTY 50 : "^NSEI"').upper()
 #status_radio = st.radio('Please click Search when you are ready.', ('Entry', 'Search'))
 
-if stock_ticker != None and market_ticker != None:
+if stock_ticker_input != None and market_ticker != None:
     st.header('Beta Estimation')
     status_radio = st.radio('Mode of entering the time period', ('Number of years', 'Start and End Dates of a period'))
     if status_radio == "Start and End Dates of a period":
